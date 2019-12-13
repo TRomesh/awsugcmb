@@ -1,0 +1,34 @@
+# this is an auto generated file. This will be overwritten
+mutation CreateHero(
+  $input: CreateHeroInput!
+  $condition: ModelHeroConditionInput
+) {
+  createHero(input: $input, condition: $condition) {
+    id
+    name
+    power
+    status
+  }
+}
+mutation UpdateHero(
+  $input: UpdateHeroInput!
+  $condition: ModelHeroConditionInput
+) {
+  updateHero(input: $input, condition: $condition) {
+    id
+    name
+    power
+    status
+  }
+}
+mutation DeleteHero(
+  $input: DeleteHeroInput!
+  $condition: ModelHeroConditionInput
+) {
+  deleteHero(input: $input, condition: $condition) {
+    id
+    name
+    power
+    status
+  }
+}

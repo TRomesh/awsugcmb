@@ -1,0 +1,6 @@
+type Hero @model {
+  id: ID!
+  name: String!
+  power: String
+  status: Boolean
+}

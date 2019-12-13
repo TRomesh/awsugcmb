@@ -1,0 +1,69 @@
+<app-nav></app-nav>
+
+<div class="row" style="margin: 1rem;">
+  <div class="col-md-8">
+    <input class="form-control" type="text" placeholder="Search..." />
+  </div>
+  <div class="col-md-1">
+    <button type="submit" class="btn btn-info">Search</button>
+  </div>
+  <div class="col-md-2">
+    <button
+      type="button"
+      style="margin-left: 2.5rem;"
+      class="btn btn-success"
+      (click)="createHero()"
+    >
+      Create Hero
+    </button>
+  </div>
+  <div class="col-md-1">
+    <button type="button" class="btn btn-secondary" (click)="getHeros()">
+      Refresh
+    </button>
+  </div>
+</div>
+
+<div class="container-fluid">
+  <div class="row" style="margin: 1rem">
+    <div
+      class="col-md-3"
+      style="margin-top: 1rem;"
+      *ngFor="let hero of heros"
+      data-toggle="tooltip"
+      data-placement="top"
+      title="View Details"
+    >
+      <div
+        style="border-radius: 5px; border: 1px solid #333333; margin: 1rem; padding: 1rem;"
+      >
+        <img
+          src="../../assets/image/shield.jpg"
+          style="min-height: 11rem; min-width: 11rem; display: block; margin-left: auto; margin-right: auto; width: 50%;"
+        />
+
+        <div
+          style="margin-top: 1rem; border-top: 1px solid #333333; padding-top: 1rem;"
+        >
+          <span style="font-size: 20px; color: #333333;">Name : </span>
+          <span style="font-size: 20px;"> {{ hero.name }}</span>
+        </div>
+
+        <div>
+          <span style="font-size: 20px; color: #333333;">Power : </span>
+          <span style="font-size: 20px;"> {{ hero.power }}</span>
+        </div>
+
+        <div style="padding-top: 1rem;">
+          <button
+            type="button"
+            class="btn btn-danger btn-block"
+            (click)="deleteHero(hero)"
+          >
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

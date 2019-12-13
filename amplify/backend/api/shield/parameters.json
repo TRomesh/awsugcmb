@@ -1,0 +1,11 @@
+{
+    "AppSyncApiName": "shield",
+    "DynamoDBBillingMode": "PAY_PER_REQUEST",
+    "DynamoDBEnableServerSideEncryption": "false",
+    "AuthCognitoUserPoolId": {
+        "Fn::GetAtt": [
+            "authshield7d1e2458",
+            "Outputs.UserPoolId"
+        ]
+    }
+}

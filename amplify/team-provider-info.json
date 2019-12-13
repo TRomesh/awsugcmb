@@ -1,0 +1,20 @@
+{
+    "app": {
+        "awscloudformation": {
+            "AuthRoleName": "amplify-shield-app-90321-authRole",
+            "UnauthRoleArn": "arn:aws:iam::974269781823:role/amplify-shield-app-90321-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::974269781823:role/amplify-shield-app-90321-authRole",
+            "Region": "eu-central-1",
+            "DeploymentBucketName": "amplify-shield-app-90321-deployment",
+            "UnauthRoleName": "amplify-shield-app-90321-unauthRole",
+            "StackName": "amplify-shield-app-90321",
+            "StackId": "arn:aws:cloudformation:eu-central-1:974269781823:stack/amplify-shield-app-90321/56073830-1d59-11ea-a011-02ae4173b208",
+            "AmplifyAppId": "d32jd6tgg6y3a9"
+        },
+        "categories": {
+            "auth": {
+                "shield7d1e2458": {}
+            }
+        }
+    }
+}

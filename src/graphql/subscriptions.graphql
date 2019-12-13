@@ -1,0 +1,25 @@
+# this is an auto generated file. This will be overwritten
+subscription OnCreateHero {
+  onCreateHero {
+    id
+    name
+    power
+    status
+  }
+}
+subscription OnUpdateHero {
+  onUpdateHero {
+    id
+    name
+    power
+    status
+  }
+}
+subscription OnDeleteHero {
+  onDeleteHero {
+    id
+    name
+    power
+    status
+  }
+}
