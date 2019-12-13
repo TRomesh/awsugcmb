@@ -50,4 +50,19 @@ export class HeroComponent implements OnInit {
       alert("Something went wrong");
     }
   };
+
+  updateHero = async hero => {
+    try {
+      await this.api.UpdateHero(hero);
+      this.heros = this.heros.map(heroObj => {
+        if (heroObj.id === hero.id) {
+          return hero;
+        }
+
+        return heroObj;
+      });
+    } catch (error) {
+      alert("Something went wrong");
+    }
+  };
 }
