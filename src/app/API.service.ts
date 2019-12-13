@@ -104,6 +104,62 @@ export type ModelIDInput = {
   size?: ModelSizeInput | null;
 };
 
+export type SearchableHeroFilterInput = {
+  id?: SearchableIDFilterInput | null;
+  name?: SearchableStringFilterInput | null;
+  power?: SearchableStringFilterInput | null;
+  status?: SearchableBooleanFilterInput | null;
+  and?: Array<SearchableHeroFilterInput | null> | null;
+  or?: Array<SearchableHeroFilterInput | null> | null;
+  not?: SearchableHeroFilterInput | null;
+};
+
+export type SearchableIDFilterInput = {
+  ne?: string | null;
+  eq?: string | null;
+  match?: string | null;
+  matchPhrase?: string | null;
+  matchPhrasePrefix?: string | null;
+  multiMatch?: string | null;
+  exists?: boolean | null;
+  wildcard?: string | null;
+  regexp?: string | null;
+};
+
+export type SearchableStringFilterInput = {
+  ne?: string | null;
+  eq?: string | null;
+  match?: string | null;
+  matchPhrase?: string | null;
+  matchPhrasePrefix?: string | null;
+  multiMatch?: string | null;
+  exists?: boolean | null;
+  wildcard?: string | null;
+  regexp?: string | null;
+};
+
+export type SearchableBooleanFilterInput = {
+  eq?: boolean | null;
+  ne?: boolean | null;
+};
+
+export type SearchableHeroSortInput = {
+  field?: SearchableHeroSortableFields | null;
+  direction?: SearchableSortDirection | null;
+};
+
+export enum SearchableHeroSortableFields {
+  id = "id",
+  name = "name",
+  power = "power",
+  status = "status"
+}
+
+export enum SearchableSortDirection {
+  asc = "asc",
+  desc = "desc"
+}
+
 export type CreateHeroMutation = {
   __typename: "Hero";
   id: string;
@@ -146,6 +202,19 @@ export type ListHerosQuery = {
     status: boolean | null;
   } | null> | null;
   nextToken: string | null;
+};
+
+export type SearchHerosQuery = {
+  __typename: "SearchableHeroConnection";
+  items: Array<{
+    __typename: "Hero";
+    id: string;
+    name: string;
+    power: string | null;
+    status: boolean | null;
+  } | null> | null;
+  nextToken: string | null;
+  total: number | null;
 };
 
 export type OnCreateHeroSubscription = {
@@ -298,6 +367,44 @@ export class APIService {
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
     return <ListHerosQuery>response.data.listHeros;
+  }
+  async SearchHeros(
+    filter?: SearchableHeroFilterInput,
+    sort?: SearchableHeroSortInput,
+    limit?: number,
+    nextToken?: string
+  ): Promise<SearchHerosQuery> {
+    const statement = `query SearchHeros($filter: SearchableHeroFilterInput, $sort: SearchableHeroSortInput, $limit: Int, $nextToken: String) {
+        searchHeros(filter: $filter, sort: $sort, limit: $limit, nextToken: $nextToken) {
+          __typename
+          items {
+            __typename
+            id
+            name
+            power
+            status
+          }
+          nextToken
+          total
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    if (sort) {
+      gqlAPIServiceArguments.sort = sort;
+    }
+    if (limit) {
+      gqlAPIServiceArguments.limit = limit;
+    }
+    if (nextToken) {
+      gqlAPIServiceArguments.nextToken = nextToken;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <SearchHerosQuery>response.data.searchHeros;
   }
   OnCreateHeroListener: Observable<OnCreateHeroSubscription> = API.graphql(
     graphqlOperation(

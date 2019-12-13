@@ -22,3 +22,25 @@ query ListHeros(
     nextToken
   }
 }
+query SearchHeros(
+  $filter: SearchableHeroFilterInput
+  $sort: SearchableHeroSortInput
+  $limit: Int
+  $nextToken: String
+) {
+  searchHeros(
+    filter: $filter
+    sort: $sort
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      name
+      power
+      status
+    }
+    nextToken
+    total
+  }
+}

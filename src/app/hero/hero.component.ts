@@ -8,6 +8,7 @@ import { APIService } from "../API.service";
 })
 export class HeroComponent implements OnInit {
   private heros: any;
+  private filterKey: string;
   constructor(private api: APIService) {}
 
   async ngOnInit() {
@@ -61,6 +62,17 @@ export class HeroComponent implements OnInit {
 
         return heroObj;
       });
+    } catch (error) {
+      alert("Something went wrong");
+    }
+  };
+
+  searchHero = async () => {
+    try {
+      const result = await this.api.SearchHeros({
+        name: { match: this.filterKey }
+      });
+      this.heros = result.items;
     } catch (error) {
       alert("Something went wrong");
     }
