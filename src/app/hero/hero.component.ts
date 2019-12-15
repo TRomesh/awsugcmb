@@ -1,5 +1,6 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, TemplateRef } from "@angular/core";
 import { APIService } from "../API.service";
+import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 
 @Component({
   selector: "app-hero",
@@ -9,7 +10,10 @@ import { APIService } from "../API.service";
 export class HeroComponent implements OnInit {
   private heros: any;
   private filterKey: string;
-  constructor(private api: APIService) {}
+  modalRef: BsModalRef;
+  name: string;
+  power: string;
+  constructor(private api: APIService, private modalService: BsModalService) {}
 
   onCreateHeroListener = () => {
     this.api.OnCreateHeroListener.subscribe(
@@ -56,15 +60,30 @@ export class HeroComponent implements OnInit {
     }
   }
 
+  openModal(template: TemplateRef<any>, hero = undefined) {
+    this.modalRef = this.modalService.show(template);
+    if(hero){
+      this.name = hero.name;
+      this.power = hero.power;
+    }
+  }
+
+  closeModal() {
+    this.name = "";
+    this.power = "";
+    this.modalRef.hide();
+  }
+
   createHero = async () => {
-    const newHero = {
-      name: "Hulk",
-      power: "Smash",
-      status: true
-    };
     try {
+      const newHero = {
+        name: this.name,
+        power: this.power,
+        status: true
+      };
       const result = await this.api.CreateHero(newHero);
       this.heros.push({ ...newHero, id: result.id });
+      this.closeModal();
     } catch (error) {
       alert("Something went wrong");
     }
@@ -88,14 +107,23 @@ export class HeroComponent implements OnInit {
     }
   };
 
-  updateHero = async hero => {
+  update(hero){
+    const heroObj = {
+      ...hero,
+      name: this.name,
+      power: this.power
+    };
+    this.updateHero(heroObj);
+    this.closeModal();
+  }
+
+  updateHero = async (hero) => {
     try {
       await this.api.UpdateHero(hero);
       this.heros = this.heros.map(heroObj => {
         if (heroObj.id === hero.id) {
           return hero;
         }
-
         return heroObj;
       });
     } catch (error) {
