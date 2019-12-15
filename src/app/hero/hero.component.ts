@@ -24,8 +24,12 @@ export class HeroComponent implements OnInit {
     }
   }
 
-  openModal(template: TemplateRef<any>) {
+  openModal(template: TemplateRef<any>, hero = undefined) {
     this.modalRef = this.modalService.show(template);
+    if(hero){
+      this.name = hero.name;
+      this.power = hero.power;
+    }
   }
 
   closeModal() {
@@ -50,12 +54,6 @@ export class HeroComponent implements OnInit {
     }
   };
 
-  updateHero = () => {
-    console.log('name', this.name);
-    console.log('power', this.power);
-    this.closeModal();
-  };
-
   deleteHero = async ({ id }) => {
     try {
       await this.api.DeleteHero({ id });
@@ -74,14 +72,23 @@ export class HeroComponent implements OnInit {
     }
   };
 
-  updateHero = async hero => {
+  update(hero){
+    const heroObj = {
+      ...hero,
+      name: this.name,
+      power: this.power
+    };
+    this.updateHero(heroObj);
+    this.closeModal();
+  }
+
+  updateHero = async (hero) => {
     try {
       await this.api.UpdateHero(hero);
       this.heros = this.heros.map(heroObj => {
         if (heroObj.id === hero.id) {
           return hero;
         }
-
         return heroObj;
       });
     } catch (error) {
