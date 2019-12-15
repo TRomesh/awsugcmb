@@ -11,9 +11,45 @@ export class HeroComponent implements OnInit {
   private filterKey: string;
   constructor(private api: APIService) {}
 
+  onCreateHeroListener = () => {
+    this.api.OnCreateHeroListener.subscribe(
+      result => {
+        alert("Someone created a hero");
+      },
+      error => {
+        throw error;
+      }
+    );
+  };
+
+  onDeleteHeroListener = () => {
+    this.api.OnDeleteHeroListener.subscribe(
+      result => {
+        alert("Someone deleted a hero");
+      },
+      error => {
+        throw error;
+      }
+    );
+  };
+
+  onUpdateHeroListener = () => {
+    this.api.OnUpdateHeroListener.subscribe(
+      result => {
+        alert("Someone updated a hero");
+      },
+      error => {
+        throw error;
+      }
+    );
+  };
+
   async ngOnInit() {
     try {
       const result = await this.api.ListHeros();
+      this.onCreateHeroListener();
+      this.onDeleteHeroListener();
+      this.onUpdateHeroListener();
       this.heros = result.items;
     } catch (error) {
       alert("Something went wrong");
