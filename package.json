@@ -19,6 +19,8 @@
     "@angular/platform-browser": "~8.0.1",
     "@angular/platform-browser-dynamic": "~8.0.1",
     "@angular/router": "~8.0.1",
+    "@aws-amplify/core": "^2.2.0",
+    "@aws-amplify/datastore": "^1.0.2",
     "aws-amplify": "^2.2.0",
     "aws-amplify-angular": "^4.1.1",
     "bootstrap": "^4.4.1",

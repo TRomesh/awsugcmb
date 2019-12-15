@@ -1,6 +1,9 @@
 import { Component, OnInit, TemplateRef } from "@angular/core";
 import { APIService } from "../API.service";
 import { BsModalRef, BsModalService } from "ngx-bootstrap";
+import Amplify from "@aws-amplify/core";
+import { DataStore, Predicates } from "@aws-amplify/datastore";
+import { Hero } from "../../models";
 
 @Component({
   selector: "app-hero",
@@ -75,18 +78,27 @@ export class HeroComponent implements OnInit {
   }
 
   createHero = async () => {
-    try {
-      const newHero = {
-        name: this.name,
-        power: this.power,
+    const test = await DataStore.save(
+      new Hero({
+        name: "Captain America",
+        power: "super soldier",
         status: true
-      };
-      const result = await this.api.CreateHero(newHero);
-      this.heros.push({ ...newHero, id: result.id });
-      this.closeModal();
-    } catch (error) {
-      alert("Something went wrong");
-    }
+      })
+    );
+
+    console.log("test : ", test);
+    // try {
+    //   const newHero = {
+    //     name: this.name,
+    //     power: this.power,
+    //     status: true
+    //   };
+    //   const result = await this.api.CreateHero(newHero);
+    //   this.heros.push({ ...newHero, id: result.id });
+    //   this.closeModal();
+    // } catch (error) {
+    //   alert("Something went wrong");
+    // }
   };
 
   deleteHero = async ({ id }) => {
@@ -118,7 +130,6 @@ export class HeroComponent implements OnInit {
   }
 
   updateHero = async hero => {
-    console.log("Hero : ", hero);
     try {
       await this.api.UpdateHero(hero);
       this.heros = this.heros.map(heroObj => {
