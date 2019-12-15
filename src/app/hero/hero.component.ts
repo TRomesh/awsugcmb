@@ -45,7 +45,6 @@ export class HeroComponent implements OnInit {
         power: this.power,
         status: true
       };
-      console.log(newHero);
       const result = await this.api.CreateHero(newHero);
       this.heros.push({ ...newHero, id: result.id });
       this.closeModal();
