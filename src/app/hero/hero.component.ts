@@ -1,5 +1,6 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, TemplateRef } from "@angular/core";
 import { APIService } from "../API.service";
+import { BsModalRef, BsModalService } from "ngx-bootstrap";
 
 @Component({
   selector: "app-hero",
@@ -9,26 +10,80 @@ import { APIService } from "../API.service";
 export class HeroComponent implements OnInit {
   private heros: any;
   private filterKey: string;
-  constructor(private api: APIService) {}
+  modalRef: BsModalRef;
+  name: string;
+  power: string;
+  constructor(private api: APIService, private modalService: BsModalService) {}
+
+  onCreateHeroListener = () => {
+    this.api.OnCreateHeroListener.subscribe(
+      result => {
+        alert("Someone created a hero");
+      },
+      error => {
+        throw error;
+      }
+    );
+  };
+
+  onDeleteHeroListener = () => {
+    this.api.OnDeleteHeroListener.subscribe(
+      result => {
+        alert("Someone deleted a hero");
+      },
+      error => {
+        throw error;
+      }
+    );
+  };
+
+  onUpdateHeroListener = () => {
+    this.api.OnUpdateHeroListener.subscribe(
+      result => {
+        alert("Someone updated a hero");
+      },
+      error => {
+        throw error;
+      }
+    );
+  };
 
   async ngOnInit() {
     try {
       const result = await this.api.ListHeros();
+      this.onCreateHeroListener();
+      this.onDeleteHeroListener();
+      this.onUpdateHeroListener();
       this.heros = result.items;
     } catch (error) {
       alert("Something went wrong");
     }
   }
 
+  openModal(template: TemplateRef<any>, hero = undefined) {
+    this.modalRef = this.modalService.show(template);
+    if (hero) {
+      this.name = hero.name;
+      this.power = hero.power;
+    }
+  }
+
+  closeModal() {
+    this.name = "";
+    this.power = "";
+    this.modalRef.hide();
+  }
+
   createHero = async () => {
-    const newHero = {
-      name: "Hulk",
-      power: "Smash",
-      status: true
-    };
     try {
+      const newHero = {
+        name: this.name,
+        power: this.power,
+        status: true
+      };
       const result = await this.api.CreateHero(newHero);
       this.heros.push({ ...newHero, id: result.id });
+      this.closeModal();
     } catch (error) {
       alert("Something went wrong");
     }
@@ -52,14 +107,24 @@ export class HeroComponent implements OnInit {
     }
   };
 
+  update({ id, status }) {
+    this.updateHero({
+      id,
+      name: this.name,
+      power: this.power,
+      status
+    });
+    this.closeModal();
+  }
+
   updateHero = async hero => {
+    console.log("Hero : ", hero);
     try {
       await this.api.UpdateHero(hero);
       this.heros = this.heros.map(heroObj => {
         if (heroObj.id === hero.id) {
           return hero;
         }
-
         return heroObj;
       });
     } catch (error) {
