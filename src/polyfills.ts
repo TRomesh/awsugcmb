@@ -1,9 +1,8 @@
 (window as any).global = window;
+global.Buffer = global.Buffer || require("buffer").Buffer;
 (window as any).process = {
   env: { DEBUG: undefined }
 };
-
-window.Buffer = window.Buffer || require("buffer").Buffer;
 
 /**
  * This file includes polyfills needed by Angular and is loaded before the app.

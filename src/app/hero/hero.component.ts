@@ -1,6 +1,6 @@
 import { Component, OnInit, TemplateRef } from "@angular/core";
 import { APIService } from "../API.service";
-import { BsModalRef, BsModalService } from 'ngx-bootstrap';
+import { BsModalRef, BsModalService } from "ngx-bootstrap";
 
 @Component({
   selector: "app-hero",
@@ -62,7 +62,7 @@ export class HeroComponent implements OnInit {
 
   openModal(template: TemplateRef<any>, hero = undefined) {
     this.modalRef = this.modalService.show(template);
-    if(hero){
+    if (hero) {
       this.name = hero.name;
       this.power = hero.power;
     }
@@ -107,17 +107,18 @@ export class HeroComponent implements OnInit {
     }
   };
 
-  update(hero){
-    const heroObj = {
-      ...hero,
+  update({ id, status }) {
+    this.updateHero({
+      id,
       name: this.name,
-      power: this.power
-    };
-    this.updateHero(heroObj);
+      power: this.power,
+      status
+    });
     this.closeModal();
   }
 
-  updateHero = async (hero) => {
+  updateHero = async hero => {
+    console.log("Hero : ", hero);
     try {
       await this.api.UpdateHero(hero);
       this.heros = this.heros.map(heroObj => {
