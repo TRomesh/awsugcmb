@@ -14,18 +14,69 @@
       Search
     </button>
   </div>
-  <div class="col-md-2">
+  <div class="col-md-1">
     <button
       type="button"
-      style="margin-left: 2.5rem;"
+      style="margin-left: 1rem;"
       class="btn btn-success"
-      (click)="createHero()"
+      (click)="openModal(createHeroModal)"
     >
       Create Hero
     </button>
+    <ng-template #createHeroModal>
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Create Hero</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+       <div class="form">
+         <label for="name">Name: </label>
+         <input id="name" [(ngModel)]="name" class="form-control">
+         <label for="power">Power: </label>
+         <input id="power" [(ngModel)]="power" class="form-control">
+       </div>
+      </div>
+      <div class="modal-footer">
+        <input type='button' value="Cancel" class="btn btn-outline-secondary" (click)=closeModal()>
+        <input type='button' value='Submit' class="btn btn-primary" (click)=createHero()>
+      </div>
+    </ng-template>
+  </div>
+  <div class="col=md-1">
+    <button
+      type="button"
+      style="margin-left: 1rem;"
+      class="btn btn-primary"
+      (click)="openModal(updateHeroModal)"
+    >
+      Update Hero
+    </button>
+    <ng-template #updateHeroModal>
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Update Hero</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+       <div class="form">
+         <label for="name">Name: </label>
+         <input id="name" [(ngModel)]="name" class="form-control">
+         <label for="power">Power: </label>
+         <input id="power" [(ngModel)]="power" class="form-control">
+       </div>
+      </div>
+      <div class="modal-footer">
+        <input type='button' value="Cancel" class="btn btn-outline-secondary" (click)=closeModal()>
+        <input type='button' value='Submit' class="btn btn-primary" (click)=updateHero()>
+      </div>
+    </ng-template>
+ 
   </div>
   <div class="col-md-1">
-    <button type="button" class="btn btn-secondary" (click)="getHeros()">
+    <button type="button" style="margin-left: 0.5rem;" class="btn btn-secondary" (click)="getHeros()">
       Refresh
     </button>
   </div>

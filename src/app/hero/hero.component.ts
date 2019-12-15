@@ -1,5 +1,6 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, TemplateRef } from "@angular/core";
 import { APIService } from "../API.service";
+import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 
 @Component({
   selector: "app-hero",
@@ -9,7 +10,10 @@ import { APIService } from "../API.service";
 export class HeroComponent implements OnInit {
   private heros: any;
   private filterKey: string;
-  constructor(private api: APIService) {}
+  modalRef: BsModalRef;
+  name: string;
+  power: string;
+  constructor(private api: APIService, private modalService: BsModalService) {}
 
   async ngOnInit() {
     try {
@@ -20,18 +24,36 @@ export class HeroComponent implements OnInit {
     }
   }
 
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template);
+  }
+
+  closeModal() {
+    this.name = "";
+    this.power = "";
+    this.modalRef.hide();
+  }
+
   createHero = async () => {
-    const newHero = {
-      name: "Hulk",
-      power: "Smash",
-      status: true
-    };
     try {
+      const newHero = {
+        name: this.name,
+        power: this.power,
+        status: true
+      };
+      console.log(newHero);
       const result = await this.api.CreateHero(newHero);
       this.heros.push({ ...newHero, id: result.id });
+      this.closeModal();
     } catch (error) {
       alert("Something went wrong");
     }
+  };
+
+  updateHero = () => {
+    console.log('name', this.name);
+    console.log('power', this.power);
+    this.closeModal();
   };
 
   deleteHero = async ({ id }) => {
