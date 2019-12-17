@@ -118,7 +118,6 @@ export class HeroComponent implements OnInit {
   }
 
   updateHero = async hero => {
-    console.log("Hero : ", hero);
     try {
       await this.api.UpdateHero(hero);
       this.heros = this.heros.map(heroObj => {
@@ -129,6 +128,8 @@ export class HeroComponent implements OnInit {
       });
     } catch (error) {
       alert("Something went wrong");
+      console.log(error);
+      
     }
   };
 

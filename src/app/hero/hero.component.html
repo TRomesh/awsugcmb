@@ -7,10 +7,11 @@
       type="text"
       [(ngModel)]="filterKey"
       placeholder="Search..."
+      data-cy="search-hero-field"
     />
   </div>
   <div class="col-md-1">
-    <button type="button" class="btn btn-info" (click)="searchHero()">
+    <button type="button" class="btn btn-info" (click)="searchHero()" data-cy="search-hero-button">
       Search
     </button>
   </div>
@@ -20,6 +21,7 @@
       style="margin-left: 2.5rem;"
       class="btn btn-success"
       (click)="openModal(createHeroModal)"
+      data-cy="create-hero-button"
     >
       Create Hero
     </button>
@@ -33,14 +35,14 @@
       <div class="modal-body">
        <div class="form">
          <label for="name">Name: </label>
-         <input id="name" [(ngModel)]="name" class="form-control">
+         <input id="name" [(ngModel)]="name" class="form-control" data-cy="hero-name-field">
          <label for="power">Power: </label>
-         <input id="power" [(ngModel)]="power" class="form-control">
+         <input id="power" [(ngModel)]="power" class="form-control" data-cy="hero-power-field">
        </div>
       </div>
       <div class="modal-footer">
-        <input type='button' value="Cancel" class="btn btn-outline-secondary" (click)=closeModal()>
-        <input type='button' value='Submit' class="btn btn-primary" (click)=createHero()>
+        <input type='button' value="Cancel" class="btn btn-outline-secondary" (click)=closeModal() data-cy="hero-create-cancel-button">
+        <input type='button' value='Submit' class="btn btn-primary" (click)=createHero() data-cy="hero-create-submit-button">
       </div>
     </ng-template>
   </div>
@@ -61,6 +63,7 @@
       data-toggle="tooltip"
       data-placement="top"
       title="View Details"
+      data-cy="hero-tile"
     >
       <div
         style="border-radius: 5px; border: 1px solid #333333; margin: 1rem; padding: 1rem;"
@@ -86,6 +89,7 @@
             type="button"
             class="btn btn-primary btn-block"
             (click)="openModal(updateHeroModal, hero)"
+            data-cy="update-hero-button"
           >
             Update Hero
           </button>
@@ -99,14 +103,14 @@
             <div class="modal-body">
              <div class="form">
                <label for="name">Name: </label>
-               <input id="name" [(ngModel)]="name" class="form-control">
+               <input id="name" [(ngModel)]="name" class="form-control" data-cy="update-hero-name-field">
                <label for="power">Power: </label>
-               <input id="power" [(ngModel)]="power" class="form-control">
+               <input id="power" [(ngModel)]="power" class="form-control" data-cy="update-hero-power-field">
              </div>
             </div>
             <div class="modal-footer">
               <input type='button' value="Cancel" class="btn btn-outline-secondary" (click)=closeModal()>
-              <input type='button' value='Submit' class="btn btn-primary" (click)=update(hero)>
+              <input type='button' value='Submit' class="btn btn-primary" (click)=update(hero) data-cy="update-hero-button">
             </div>
           </ng-template>       
         </div>
@@ -115,6 +119,7 @@
             type="button"
             class="btn btn-danger btn-block"
             (click)="deleteHero(hero)"
+            data-cy="delete-hero-button"
           >
             Delete
           </button>
