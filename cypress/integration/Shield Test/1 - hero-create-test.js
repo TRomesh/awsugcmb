@@ -1,6 +1,6 @@
 describe('Creating heroes at S.H.I.E.L.D', function () {
     it('Typing the credentials and logging in', function () {
-        cy.visit('http://localhost:4200');
+        cy.visit('https://master.d3vtj69ovb94wy.amplifyapp.com');
         cy.get('[data-test=username-input]').type('andrew');
         cy.get('[data-test=sign-in-password-input]').type('Andrew1996');
         cy.get('[data-test=sign-in-sign-in-button]').click();
